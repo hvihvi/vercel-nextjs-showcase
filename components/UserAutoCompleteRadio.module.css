@@ -1,0 +1,52 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 5px;
+    padding: 10px;
+    background-color: #2e3136;
+    border-radius: 7px;
+}
+
+.leftSpan {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.avatar {
+    margin-left: 5px;
+    height: 40px;
+    background-color: white;
+    clip-path: circle(40%);
+}
+
+.item {
+    display: flex;
+    align-items: center;
+}
+.input, .input:focus {
+    opacity: 0;
+    margin: 0;
+    padding: 0;
+    width: 0;
+    height: 0;
+}
+
+input:focus + .label, .label:hover {
+    background-color: #36393f;
+}
+
+.label {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 3px;
+}
+
+.rightSpan {
+    font-size: 12px;
+    margin-right: 5px;
+}

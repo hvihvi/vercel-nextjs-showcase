@@ -1,0 +1,9 @@
+.textArea {
+    background-color: #40444a;
+    color: #c6c7c9;
+    margin: 5px;
+}
+
+.textArea::placeholder {
+    color: #71757b;
+}
