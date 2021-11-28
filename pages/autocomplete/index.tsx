@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { Descendant } from "slate";
 import { Editable, Slate } from "slate-react";
 import styles from "./index.module.css";
-import { UserSelect } from "../../components/UserSelect";
+import { UserSelect } from "../../components/users/UserSelect";
 import { useEditor } from "../../components/useEditor";
 import { useRenderElement } from "../../components/useRenderElement";
-import { useUserSearch } from "../../components/useUserSearch";
+import { useUserSearch } from "../../components/users/useUserSearch";
 
 const DiscordTextArea = () => {
   const [value, setValue] = useState<Descendant[]>(initialValue);
