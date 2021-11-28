@@ -26,17 +26,7 @@ export const UserAutoCompleteRadio = ({ onSubmit }) => {
             }}
             onChange={(e) => setValue(e.target.value)}
           />
-          <label htmlFor={toId(user)} className={styles.label}>
-            <span className={styles.leftSpan}>
-              <img
-                className={styles.avatar}
-                alt="psykokwak"
-                src="https://www.pokepedia.fr/images/4/44/Psykokwak-RFVF.png"
-              />
-              <strong>{user.username}</strong>
-            </span>
-            <span className={styles.rightSpan}>{toReadableUser(user)}</span>
-          </label>
+          <label htmlFor={toId(user)} className={styles.label}></label>
         </div>
       ))}
     </form>

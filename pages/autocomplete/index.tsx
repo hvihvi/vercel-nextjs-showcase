@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { createEditor, Descendant, Editor, Range, Transforms } from "slate";
 import { withHistory } from "slate-history";
 import {
@@ -10,22 +10,23 @@ import {
 } from "slate-react";
 import data from "../../components/data.json";
 import styles from "./index.module.css";
+import { UserSelect } from "../../components/UserSelect";
+import { Mention } from "../../components/Mention";
 
 const DiscordTextArea = () => {
-  const ref = useRef<HTMLDivElement | null>();
   const [value, setValue] = useState<Descendant[]>(initialValue);
   const [target, setTarget] = useState<Range | undefined>();
   const [index, setIndex] = useState(0);
   const [search, setSearch] = useState("");
   const renderElement = useCallback((props) => <Element {...props} />, []);
   const editor = useMemo(
+    // @ts-ignore
     () => withMentions(withReact(withHistory(createEditor()))),
     []
   );
 
   const users = data.users
-    .map((user) => user.username)
-    .filter((c) => c.toLowerCase().startsWith(search.toLowerCase()))
+    .filter((it) => it.username.toLowerCase().startsWith(search.toLowerCase()))
     .slice(0, 10);
 
   const onKeyDown = useCallback(
@@ -46,7 +47,7 @@ const DiscordTextArea = () => {
           case "Enter":
             event.preventDefault();
             Transforms.select(editor, target);
-            insertMention(editor, users[index]);
+            insertMention(editor, users[index].username);
             setTarget(null);
             break;
           case "Escape":
@@ -90,24 +91,7 @@ const DiscordTextArea = () => {
         setTarget(null);
       }}
     >
-      {target && users.length > 0 && (
-        <div>
-          <div>
-            {users.map((char, i) => (
-              <div
-                key={char}
-                style={{
-                  padding: "1px 3px",
-                  borderRadius: "3px",
-                  background: i === index ? "#B4D5FF" : "transparent",
-                }}
-              >
-                {char}
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
+      {target && users.length > 0 && <UserSelect users={users} index={index} />}
       <section className={styles.textSection}>
         <Editable
           renderElement={renderElement}
@@ -153,34 +137,8 @@ const Element = (props) => {
   }
 };
 
-const Mention = ({ attributes, children, element }) => {
-  const selected = useSelected();
-  const focused = useFocused();
-  return (
-    <span
-      {...attributes}
-      contentEditable={false}
-      data-cy={`mention-${element.character.replace(" ", "-")}`}
-      style={{
-        padding: "3px 3px 2px",
-        margin: "0 1px",
-        verticalAlign: "baseline",
-        display: "inline-block",
-        borderRadius: "4px",
-        backgroundColor: "#eee",
-        fontSize: "0.9em",
-        boxShadow: selected && focused ? "0 0 0 2px #B4D5FF" : "none",
-      }}
-    >
-      @{element.character}
-      {children}
-    </span>
-  );
-};
-
 const initialValue: Descendant[] = [
   {
-    type: "paragraph",
     children: [
       {
         text: "",
