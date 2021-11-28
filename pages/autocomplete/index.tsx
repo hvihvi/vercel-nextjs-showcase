@@ -26,7 +26,7 @@ const DiscordTextArea = () => {
   );
 
   const users = data.users
-    .filter((it) => it.username.toLowerCase().startsWith(search.toLowerCase()))
+    .filter((it) => it.username.toLowerCase().includes(search.toLowerCase()))
     .slice(0, 10);
 
   const onKeyDown = useCallback(
