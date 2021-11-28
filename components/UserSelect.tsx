@@ -7,7 +7,7 @@ export const UserSelect = ({ users, index }) => {
       {users.map((user, i) => (
         <div
           className={styles.userWrapper}
-          key={user}
+          key={user.discriminator}
           style={{
             padding: "1px 3px",
             borderRadius: "3px",
