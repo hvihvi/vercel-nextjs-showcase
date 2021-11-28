@@ -4,7 +4,7 @@ import data from "./data.json";
 
 export const useUserSearch = (editor) => {
   const [target, setTarget] = useState<Range | undefined>();
-  const [index, setIndex] = useState(0);
+  const [userIndex, setIndex] = useState(0);
   const [search, setSearch] = useState("");
 
   const users = data.users
@@ -17,19 +17,19 @@ export const useUserSearch = (editor) => {
         switch (event.key) {
           case "ArrowDown":
             event.preventDefault();
-            const prevIndex = index >= users.length - 1 ? 0 : index + 1;
+            const prevIndex = userIndex >= users.length - 1 ? 0 : userIndex + 1;
             setIndex(prevIndex);
             break;
           case "ArrowUp":
             event.preventDefault();
-            const nextIndex = index <= 0 ? users.length - 1 : index - 1;
+            const nextIndex = userIndex <= 0 ? users.length - 1 : userIndex - 1;
             setIndex(nextIndex);
             break;
           case "Tab":
           case "Enter":
             event.preventDefault();
             Transforms.select(editor, target);
-            insertMention(editor, users[index].username);
+            insertMention(editor, users[userIndex].username);
             setTarget(null);
             setIndex(0);
             setSearch("");
@@ -43,7 +43,7 @@ export const useUserSearch = (editor) => {
         }
       }
     },
-    [editor, index, target, users]
+    [editor, userIndex, target, users]
   );
 
   const handleUserSearchChange = () => {
@@ -71,9 +71,9 @@ export const useUserSearch = (editor) => {
     setTarget(null);
   };
 
-  const display = target && users.length > 0;
+  const displayUsers = target && users.length > 0;
 
-  return { users, index, display, handleUserSearchChange, onKeyDown };
+  return { users, userIndex, displayUsers, handleUserSearchChange, onKeyDown };
 };
 
 const insertMention = (editor, character) => {

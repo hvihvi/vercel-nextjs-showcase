@@ -11,7 +11,7 @@ const DiscordTextArea = () => {
   const [value, setValue] = useState<Descendant[]>(initialValue);
   const renderElement = useRenderElement();
   const editor = useEditor();
-  const { users, index, display, handleUserSearchChange, onKeyDown } =
+  const { users, userIndex, displayUsers, handleUserSearchChange, onKeyDown } =
     useUserSearch(editor);
 
   return (
@@ -23,7 +23,7 @@ const DiscordTextArea = () => {
         handleUserSearchChange();
       }}
     >
-      {display && <UserSelect users={users} index={index} />}
+      {displayUsers && <UserSelect users={users} index={userIndex} />}
       <section className={styles.textSection}>
         <Editable
           renderElement={renderElement}
