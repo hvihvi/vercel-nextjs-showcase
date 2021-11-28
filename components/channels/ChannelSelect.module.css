@@ -1,0 +1,42 @@
+.wrapper {
+    position: absolute;
+    bottom: 64px;
+    display: flex;
+    flex-direction: column;
+    width: calc(100% - 20px);
+    margin: 10px;
+    padding: 10px;
+    background-color: #2e3136;
+    border-radius: 7px;
+}
+
+.chanWrapper {
+    height: 45px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 3px;
+    padding: 0 10px;
+}
+
+.leftSpan {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.avatar {
+    margin-left: 5px;
+    height: 40px;
+    background-color: white;
+    clip-path: circle(40%);
+}
+
+
+.rightSpan {
+    font-size: 12px;
+    margin-right: 5px;
+}

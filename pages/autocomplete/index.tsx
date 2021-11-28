@@ -6,13 +6,27 @@ import { UserSelect } from "../../components/users/UserSelect";
 import { useEditor } from "../../components/useEditor";
 import { useRenderElement } from "../../components/useRenderElement";
 import { useUserSearch } from "../../components/users/useUserSearch";
+import { useChannelSearch } from "../../components/channels/useChannelSearch";
+import { ChannelSelect } from "../../components/channels/ChannelSelect";
 
 const DiscordTextArea = () => {
   const [value, setValue] = useState<Descendant[]>(initialValue);
   const renderElement = useRenderElement();
   const editor = useEditor();
-  const { users, userIndex, displayUsers, handleUserSearchChange, onKeyDown } =
-    useUserSearch(editor);
+  const {
+    users,
+    userIndex,
+    displayUsers,
+    handleUserSearchChange,
+    onUserKeyDown,
+  } = useUserSearch(editor);
+  const {
+    channels,
+    channelIndex,
+    displayChans,
+    handleChannelSearchChange,
+    onChannelKeyDown,
+  } = useChannelSearch(editor);
 
   return (
     <Slate
@@ -21,13 +35,18 @@ const DiscordTextArea = () => {
       onChange={(value) => {
         setValue(value);
         handleUserSearchChange();
+        handleChannelSearchChange();
       }}
     >
       {displayUsers && <UserSelect users={users} index={userIndex} />}
+      {displayChans && <ChannelSelect chans={channels} index={channelIndex} />}
       <section className={styles.textSection}>
         <Editable
           renderElement={renderElement}
-          onKeyDown={onKeyDown}
+          onKeyDown={(e) => {
+            onUserKeyDown(e);
+            onChannelKeyDown(e);
+          }}
           placeholder="Envoyer un message dans #welcome"
         />
       </section>

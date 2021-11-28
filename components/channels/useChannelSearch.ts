@@ -2,34 +2,36 @@ import { useCallback, useState } from "react";
 import { Editor, Range, Transforms } from "slate";
 import data from "./data.json";
 
-export const useUserSearch = (editor) => {
+export const useChannelSearch = (editor) => {
   const [target, setTarget] = useState<Range | undefined>();
-  const [userIndex, setIndex] = useState(0);
+  const [channelIndex, setIndex] = useState(0);
   const [search, setSearch] = useState("");
 
-  const users = data.users
-    .filter((it) => it.username.toLowerCase().includes(search.toLowerCase()))
+  const channels = data.channels
+    .filter((it) => it.name.toLowerCase().includes(search.toLowerCase()))
     .slice(0, 10);
 
-  const onUserKeyDown = useCallback(
+  const onChannelKeyDown = useCallback(
     (event) => {
       if (target) {
         switch (event.key) {
           case "ArrowDown":
             event.preventDefault();
-            const prevIndex = userIndex >= users.length - 1 ? 0 : userIndex + 1;
+            const prevIndex =
+              channelIndex >= channels.length - 1 ? 0 : channelIndex + 1;
             setIndex(prevIndex);
             break;
           case "ArrowUp":
             event.preventDefault();
-            const nextIndex = userIndex <= 0 ? users.length - 1 : userIndex - 1;
+            const nextIndex =
+              channelIndex <= 0 ? channels.length - 1 : channelIndex - 1;
             setIndex(nextIndex);
             break;
           case "Tab":
           case "Enter":
             event.preventDefault();
             Transforms.select(editor, target);
-            insertMention(editor, users[userIndex].username);
+            insertMention(editor, channels[channelIndex].name);
             setTarget(null);
             setIndex(0);
             setSearch("");
@@ -43,10 +45,10 @@ export const useUserSearch = (editor) => {
         }
       }
     },
-    [editor, userIndex, target, users]
+    [editor, channelIndex, target, channels]
   );
 
-  const handleUserSearchChange = () => {
+  const handleChannelSearchChange = () => {
     const { selection } = editor;
     if (Range.isCollapsed(selection)) {
       const [start] = Range.edges(selection);
@@ -54,7 +56,7 @@ export const useUserSearch = (editor) => {
       const before = wordBefore && Editor.before(editor, wordBefore);
       const beforeRange = before && Editor.range(editor, before, start);
       const beforeText = beforeRange && Editor.string(editor, beforeRange);
-      const beforeMatch = beforeText && beforeText.match(/^@(\w+)$/);
+      const beforeMatch = beforeText && beforeText.match(/^#(\w+)$/);
       const after = Editor.after(editor, start);
       const afterRange = Editor.range(editor, start, after);
       const afterText = Editor.string(editor, afterRange);
@@ -71,14 +73,14 @@ export const useUserSearch = (editor) => {
     setTarget(null);
   };
 
-  const displayUsers = target && users.length > 0;
+  const displayChans = target && channels.length > 0;
 
   return {
-    users,
-    userIndex,
-    displayUsers,
-    handleUserSearchChange,
-    onUserKeyDown,
+    channels,
+    channelIndex,
+    displayChans,
+    handleChannelSearchChange,
+    onChannelKeyDown,
   };
 };
 
