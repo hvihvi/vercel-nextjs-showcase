@@ -7,7 +7,7 @@ export const ChannelSelect = ({ chans, index }) => {
       {chans.map((chan, i) => (
         <div
           className={styles.chanWrapper}
-          key={chan.discriminator}
+          key={chan.id}
           style={{
             background: i === index ? "#36393f" : "transparent",
           }}
