@@ -46,6 +46,9 @@ const DiscordTextArea = () => {
           onKeyDown={(e) => {
             onUserKeyDown(e);
             onChannelKeyDown(e);
+            if (e.key === "Enter") {
+              e.preventDefault(); // handle submit here
+            }
           }}
           placeholder="Envoyer un message dans #welcome"
         />
