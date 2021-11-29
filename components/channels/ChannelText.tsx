@@ -1,7 +1,7 @@
 import { useFocused, useSelected } from "slate-react";
 import React from "react";
 
-export const Mention = ({ attributes, children, element }) => {
+export const ChannelText = ({ attributes, children, element }) => {
   const selected = useSelected();
   const focused = useFocused();
   return (
@@ -19,7 +19,7 @@ export const Mention = ({ attributes, children, element }) => {
         boxShadow: selected && focused ? "0 0 0 2px #B4D5FF" : "none",
       }}
     >
-      @{element.character}
+      #{element.character}
       {children}
     </span>
   );

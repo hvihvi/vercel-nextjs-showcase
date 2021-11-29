@@ -1,5 +1,7 @@
 import React, { useCallback } from "react";
-import { Mention } from "./Mention";
+import { Bold } from "../bold/Bold";
+import { UserText } from "../users/UserText";
+import { ChannelText } from "../channels/ChannelText";
 
 export const useRenderElement = () =>
   useCallback((props) => <Element {...props} />, []);
@@ -7,8 +9,12 @@ export const useRenderElement = () =>
 const Element = (props) => {
   const { attributes, children, element } = props;
   switch (element.type) {
-    case "mention":
-      return <Mention {...props} />;
+    case "user":
+      return <UserText {...props} />;
+    case "channel":
+      return <ChannelText {...props} />;
+    case "bold":
+      return <Bold {...props} />;
     default:
       return <p {...attributes}>{children}</p>;
   }

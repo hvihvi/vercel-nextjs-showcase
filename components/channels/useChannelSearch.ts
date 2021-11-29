@@ -31,7 +31,7 @@ export const useChannelSearch = (editor) => {
           case "Enter":
             event.preventDefault();
             Transforms.select(editor, target);
-            insertMention(editor, channels[channelIndex].name);
+            insertChannel(editor, channels[channelIndex].name);
             setTarget(null);
             setIndex(0);
             setSearch("");
@@ -84,9 +84,9 @@ export const useChannelSearch = (editor) => {
   };
 };
 
-const insertMention = (editor, character) => {
+const insertChannel = (editor, character) => {
   const mention = {
-    type: "mention",
+    type: "channel",
     character,
     children: [{ text: "" }],
   };

@@ -29,7 +29,7 @@ export const useUserSearch = (editor) => {
           case "Enter":
             event.preventDefault();
             Transforms.select(editor, target);
-            insertMention(editor, users[userIndex].username);
+            insertUser(editor, users[userIndex].username);
             setTarget(null);
             setIndex(0);
             setSearch("");
@@ -82,9 +82,9 @@ export const useUserSearch = (editor) => {
   };
 };
 
-const insertMention = (editor, character) => {
+const insertUser = (editor, character) => {
   const mention = {
-    type: "mention",
+    type: "user",
     character,
     children: [{ text: "" }],
   };
